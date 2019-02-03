@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>my.nyanguymf.java.bukkit.console</groupId>
+  <artifactId>console-client</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Java Bukkit remote console</name>
+
+    <repositories>
+        <repository>
+            <id>maven-repository</id>
+            <url>file:///${project.basedir}/maven-repository</url>
+        </repository>
+    </repositories>
+
+  <dependencies>
+
+    <dependency>
+        <groupId>io.bluecube.thunderbolt</groupId>
+        <artifactId>Thunderbolt</artifactId>
+        <version>1.0</version>
+    </dependency>
+
+  </dependencies>
+
+ 
+    <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <!--===================================-->
+            <!-- Maven Shade plugin for executable -->
+            <!--  file and including dependencies  -->
+            <!--===================================-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>shade</goal></goals>
+                        <configuration><artifactSet><includes><include>io.bluecube.thunderbolt:*</include></includes></artifactSet></configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--==============================================-->
+            <!--    Maven Jar plugin for manifest creation    -->
+            <!--==============================================-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>me.nyanguymf.console.client.ConsoleClient</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
