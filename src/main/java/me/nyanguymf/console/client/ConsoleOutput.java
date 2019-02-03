@@ -2,7 +2,7 @@
  * ConsoleOutput.java
  *
  * Copyright 2019.02.02 Vasiliy Petukhov
- * 
+ *
  * @version 1.0
  */
 package me.nyanguymf.console.client;
@@ -15,8 +15,8 @@ import java.util.Arrays;
 class ConsoleOutput implements Outputable {
     private boolean isUnix = false;
 
-    public ConsoleOutput(boolean isUnix) {
-        this.isUnix = isUnix;
+    public ConsoleOutput() {
+        this.isUnix = ConsoleClient.isUnix();
     }
 
     /*-----------------------------------------------------*

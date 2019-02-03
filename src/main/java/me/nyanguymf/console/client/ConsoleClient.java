@@ -1,8 +1,8 @@
 /**
  * Application.java 2019.01.29
- * 
+ *
  * @author NyanGuyMF
- * 
+ *
  * @version 1.0
  */
 
@@ -102,6 +102,10 @@ public class ConsoleClient {
         System.exit(code);
     }
 
+    public static boolean isUnix() {
+        return !System.getProperty("os.name").toLowerCase().contains("windows");
+    }
+
     /** Closes connections, interrupts threads and closes files. */
     private static void stop() {
         if (gui != null)
@@ -137,8 +141,7 @@ public class ConsoleClient {
         } else {
             // TODO: greeting
             /* Is it correctly? */
-            boolean isUnix = !System.getProperty("os.name").toLowerCase().contains("windows");
-            out = new ConsoleOutput(isUnix);
+            out = new ConsoleOutput();
         }
 
         currentProfile = config.getProfile("default");

@@ -2,7 +2,7 @@
  * ServerInputHandler.java
  *
  * Copyright 2019.01.30 Vasiliy Petukhov
- * 
+ *
  * @version 1.0
  */
 package me.nyanguymf.console.client.net.handlers;
@@ -20,6 +20,11 @@ import me.nyanguymf.console.net.PacketType;
  *
  */
 public class ServerPacketHandler implements Observer {
+    private PacketHandler infoPacketHandler;
+
+    public ServerPacketHandler() {
+        this.infoPacketHandler = new InfoPacketHandler();
+    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -55,7 +60,7 @@ public class ServerPacketHandler implements Observer {
             // Nothing to execute on client side.
             break;
         case INFO:
-            ConsoleClient.out.print(event.getBody());
+            infoPacketHandler.handle(event.getPacket());
             break;
         case INVALID_PACKET_ERROR:
             ConsoleClient.out.println("Server got invalid packet: "

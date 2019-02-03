@@ -2,7 +2,7 @@
  * ServerInputEvent.java
  *
  * Copyright 2019.01.29 Vasiliy Petukhov
- * 
+ *
  * @version 1.0
  */
 package me.nyanguymf.console.client.net.events;
@@ -32,15 +32,32 @@ public class ServerInputEvent extends Observable {
         super.setChanged();
     }
 
+    /**
+     * Gets {@link Packet} type.
+     *
+     * @return  {@link Packet} type object.
+     * @see     {@link PacketType} values.
+     */
     public PacketType getType() {
         return packet.getType();
     }
 
+    /** Gets {@link Packet} body message. */
     public String getBody() {
         return packet.getBody();
     }
 
+    /**
+     * Gets miscellaneous object.
+     * <p>
+     * If object doesn't given will return null.
+     */
     public Object getMisc() {
         return packet.getMisc();
+    }
+
+    /** Gets {@link Packet}. */
+    public Packet getPacket() {
+        return this.packet;
     }
 }
