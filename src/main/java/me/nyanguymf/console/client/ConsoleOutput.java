@@ -47,9 +47,9 @@ class ConsoleOutput implements Outputable {
     @Override
     public void println(String message) {
         if (isUnix)
-            Bukkit.getConsoleSender().sendMessage(LinuxColor.CYAN_BRIGHT + message + LinuxColor.RESET);
+            System.out.println(LinuxColor.CYAN_BRIGHT + message + LinuxColor.RESET);
         else
-            Bukkit.getConsoleSender().sendMessage(message);
+            System.out.println(message);
     }
 
     @Override
@@ -58,9 +58,9 @@ class ConsoleOutput implements Outputable {
             StringBuffer colors = new StringBuffer("");
             Arrays.stream(color).forEach(action -> colors.append(action));
 
-            Bukkit.getConsoleSender().sendMessage(colors + message + LinuxColor.RESET);
+            System.out.println(colors + message + LinuxColor.RESET);
         } else {
-            Bukkit.getConsoleSender().sendMessage(message);
+            System.out.println(message);
         }
     }
 }

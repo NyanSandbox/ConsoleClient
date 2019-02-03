@@ -95,7 +95,7 @@ public class ConnectionManager {
     @Deprecated
     public boolean enterPassword(String password, String userName) {
         Packet packet = new Packet(PacketType.AUTH_PACKET, password, userName);
-        Bukkit.getConsoleSender().sendMessage("Sending packet: " + packet.toString());
+        System.out.println("Sending packet: " + packet.toString());
 
         try {
             out.sendRequest(packet);
