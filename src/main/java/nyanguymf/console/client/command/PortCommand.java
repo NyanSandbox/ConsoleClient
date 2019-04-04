@@ -21,61 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package me.nyanguymf.console.net;
+package nyanguymf.console.client.command;
 
-import java.io.Serializable;
+import static java.lang.Integer.parseInt;
 
-public final class Packet implements Serializable {
-    private static final long serialVersionUID = -3077054533247975751L;
-    private PacketType type;
-    private String body;
+import nyanguymf.console.client.cache.CredentialsCache;
 
-    private Packet() {}
+/** @author NyanGuyMF - Vasiliy Bely */
+public final class PortCommand extends Command implements CommandExecutor {
+    private CredentialsCache cache;
 
-    /**
-     * Converts to JSON format.
-     * <p>
-     * <tt><pre>{
-     *  type : ${type},
-     *  sender : ${sender},
-     *  body : ${body}
-     *}</pre></tt>
-     */
+    public PortCommand(final CredentialsCache cache) {
+        super("port");
+
+        this.cache = cache;
+    }
+
     @Override
-    public String toString() {
-        return "{ \"type\" : " + getType()
-                + ", \"body\" : " + getBody() + "}";
-    }
-
-    /** @return the type */
-    public PacketType getType() {
-        return type;
-    }
-
-    /** @return the body */
-    public String getBody() {
-        return body;
-    }
-
-    public static class PacketBuilder {
-        private Packet packet;
-
-        public PacketBuilder() {
-            packet = new Packet();
+    public void execute(final Command cmd, final String alias, final String[] args) {
+        if (args.length == 0) {
+            System.out.println("User /port «new port», please");
+            return;
         }
 
-        public PacketBuilder body(final String body) {
-            packet.body = body;
-            return this;
+        int newPort = -1;
+
+        try {
+            newPort = parseInt(args[0]);
+        } catch (NumberFormatException ex) {
+            System.err.println("You should enter the number between 0 and 65535!");
+            return;
         }
 
-        public PacketBuilder type(final PacketType type) {
-            packet.type = type;
-            return this;
+        if (newPort == cache.getPort()) {
+            System.out.println("You've entered old port.");
+            return;
         }
 
-        public Packet build() {
-            return packet;
-        }
+        cache.setPort(newPort);
+        System.out.printf("New port has been successfuly set.\n", newPort);
     }
 }

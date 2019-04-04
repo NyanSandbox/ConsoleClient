@@ -21,61 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package me.nyanguymf.console.net;
+package nyanguymf.console.client.command;
 
-import java.io.Serializable;
+import nyanguymf.console.client.cache.CredentialsCache;
 
-public final class Packet implements Serializable {
-    private static final long serialVersionUID = -3077054533247975751L;
-    private PacketType type;
-    private String body;
+/** @author NyanGuyMF - Vasiliy Bely */
+public final class HostCommand extends Command implements CommandExecutor {
+    private CredentialsCache cache;
 
-    private Packet() {}
+    public HostCommand(final CredentialsCache cache) {
+        super("host");
+    }
 
-    /**
-     * Converts to JSON format.
-     * <p>
-     * <tt><pre>{
-     *  type : ${type},
-     *  sender : ${sender},
-     *  body : ${body}
-     *}</pre></tt>
-     */
     @Override
-    public String toString() {
-        return "{ \"type\" : " + getType()
-                + ", \"body\" : " + getBody() + "}";
-    }
-
-    /** @return the type */
-    public PacketType getType() {
-        return type;
-    }
-
-    /** @return the body */
-    public String getBody() {
-        return body;
-    }
-
-    public static class PacketBuilder {
-        private Packet packet;
-
-        public PacketBuilder() {
-            packet = new Packet();
+    public void execute(final Command cmd, final String alias, final String[] args) {
+        if (args.length == 0) {
+            System.out.println("User /host «new host», please");
+            return;
         }
 
-        public PacketBuilder body(final String body) {
-            packet.body = body;
-            return this;
+        String newHost = args[0];
+
+        if (newHost.equals(cache.getHost())) {
+            System.out.println("You've entered old host.");
+            return;
         }
 
-        public PacketBuilder type(final PacketType type) {
-            packet.type = type;
-            return this;
-        }
-
-        public Packet build() {
-            return packet;
-        }
+        cache.setHost(newHost);
+        System.out.printf("New host has been successfuly set.\n", newHost);
     }
 }
