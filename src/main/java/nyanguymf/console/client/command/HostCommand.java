@@ -23,6 +23,8 @@
  */
 package nyanguymf.console.client.command;
 
+import static java.lang.Integer.parseInt;
+
 import nyanguymf.console.client.cache.CredentialsCache;
 
 /** @author NyanGuyMF - Vasiliy Bely */
@@ -43,7 +45,16 @@ public final class HostCommand extends Command implements CommandExecutor {
             return;
         }
 
-        String newHost = args[0];
+        // split host:port
+        String[] hostPort = args[0].split(":");
+        String newHost = hostPort[0];
+
+        if (hostPort.length == 1) {
+            System.out.println("Warning: you've entered only host.");
+            System.out.println("Port value will not change.");
+        } else {
+            setNewPort(hostPort[1]);
+        }
 
         if (newHost.equals(cache.getHost())) {
             System.out.println("You've entered old host.");
@@ -51,6 +62,19 @@ public final class HostCommand extends Command implements CommandExecutor {
         }
 
         cache.setHost(newHost);
-        System.out.printf("New host has been successfuly set.\n", newHost);
+        System.out.printf("New host «%s» has been successfuly set.\n", newHost);
+    }
+
+    private void setNewPort(final String port) {
+        int newPort = -1;
+
+        try {
+            newPort = parseInt(port);
+        } catch (NumberFormatException ex) {
+            System.err.println("You should enter the number between 0 and 65535 for port!");
+            return;
+        }
+
+        cache.setPort(newPort);
     }
 }
