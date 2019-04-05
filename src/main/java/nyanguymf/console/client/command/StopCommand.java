@@ -23,17 +23,30 @@
  */
 package nyanguymf.console.client.command;
 
+import me.nyanguymf.console.net.Packet;
+import me.nyanguymf.console.net.PacketType;
+import nyanguymf.console.client.io.ServerOutputManager;
+
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class StopCommand extends Command implements CommandExecutor {
+    private ServerOutputManager out;
 
-    public StopCommand() {
+    public StopCommand(final ServerOutputManager out) {
         super("stop");
         super.setExecutor(this);
+
+        this.out = out;
     }
 
     @Override
     public void execute(final Command cmd, final String alias, final String[] args) {
         System.out.println("stoping server...");
-        System.out.println("server stoped!");
+
+        Packet packet = new Packet.PacketBuilder()
+                .body("Bye c:")
+                .type(PacketType.STOP)
+                .build();
+
+        out.sendPacket(packet);
     }
 }

@@ -57,7 +57,7 @@ public final class CredentialsCache {
 
         System.out.print("Enter host: ");
         final String newHost = sc.nextLine();
-        password = newHost.equals("") ? host : newHost;
+        host = newHost.equals("") ? host : newHost;
 
         System.out.print("Enter port: ");
         port = parsePortRecursively();

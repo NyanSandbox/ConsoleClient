@@ -67,7 +67,7 @@ public final class CommandManager {
                 if (alias.equals(name)) {
                     cmd.execute(alias, args);
                     isExecuted = true;
-                    break;
+                    break; // command executed, now there are no reason to continue.
                 }
             }
         }

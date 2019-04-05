@@ -23,18 +23,15 @@
  */
 package nyanguymf.console.client.net;
 
+import static nyanguymf.console.client.net.ConnectionStatus.CONNECTED;
 import static nyanguymf.console.client.net.ConnectionStatus.CONNECTION_REFUSED;
 import static nyanguymf.console.client.net.ConnectionStatus.INVALID_PORT;
-import static nyanguymf.console.client.net.ConnectionStatus.SSL_ERROR;
 import static nyanguymf.console.client.net.ConnectionStatus.UNKNOWN_HOST;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.Socket;
 import java.net.UnknownHostException;
-
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 
 import nyanguymf.console.client.cache.CredentialsCache;
 import nyanguymf.console.client.io.ServerInputManager;
@@ -42,52 +39,27 @@ import nyanguymf.console.client.io.ServerOutputManager;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ConnectionManager {
-    private SSLSocketFactory factory =
-            (SSLSocketFactory)SSLSocketFactory.getDefault();
     private ServerOutputManager out;
     private ServerInputManager in;
     private ConnectionStatus status;
-    private SSLSocket socket;
+    private Socket socket;
 
     public ConnectionManager connect(final CredentialsCache cache) throws Exception {
         try {
-            socket = (SSLSocket)factory.createSocket(cache.getHost(), cache.getPort());
-
-            /*
-             * send http request
-             *
-             * Before any application data is sent or received, the
-             * SSL socket will do SSL handshaking first to set up
-             * the security attributes.
-             *
-             * SSL handshaking can be initiated by either flushing data
-             * down the pipe, or by starting the handshaking by hand.
-             *
-             * Handshaking is started manually in this example because
-             * PrintWriter catches all IOExceptions (including
-             * SSLExceptions), sets an internal error flag, and then
-             * returns without rethrowing the exception.
-             *
-             * Unfortunately, this means any error messages are lost,
-             * which caused lots of confusion for others using this
-             * code.  The only way to tell there was an error is to call
-             * PrintWriter.checkError().
-             */
-            socket.startHandshake();
+            socket = new Socket(cache.getHost(), cache.getPort());
 
             out = new ServerOutputManager(socket.getOutputStream());
             in = new ServerInputManager(socket.getInputStream(), cache);
 
             in.start();
 
+            status = CONNECTED;
         } catch (IllegalArgumentException ex) {
             status = INVALID_PORT;
         } catch (UnknownHostException ex) {
             status = UNKNOWN_HOST;
         } catch (ConnectException ex) {
             status = CONNECTION_REFUSED;
-        } catch (SSLException ex) {
-            status = SSL_ERROR;
         }
 
         return this;

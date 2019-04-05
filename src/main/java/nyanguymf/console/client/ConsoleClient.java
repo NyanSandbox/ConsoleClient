@@ -65,7 +65,7 @@ public class ConsoleClient {
         }
 
         commandManager = new CommandManager();
-        commandManager.registerCommand(new StopCommand());
+        commandManager.registerCommand(new StopCommand(connectionManager.getOut()));
         commandManager.registerCommand(new HelpCommand());
         commandManager.registerCommand(new LoginCommand(credentialsCache));
         commandManager.registerCommand(new PasswordCommand(credentialsCache));

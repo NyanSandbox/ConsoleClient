@@ -33,6 +33,7 @@ import nyanguymf.console.client.cache.CredentialsCache;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ServerInputManager extends Thread {
+    private InputStream serverInputStream;
     private ServerPacketEvent event;
     private ObjectInputStream in;
 
@@ -42,11 +43,18 @@ public final class ServerInputManager extends Thread {
     ) throws IOException {
         super("Server input thread");
 
-        in = new ObjectInputStream(inputStream);
+        serverInputStream = inputStream;
         event = new ServerPacketEvent(new ServerPacketHandler(cache));
     }
 
     @Override public void run() {
+        try {
+            in = new ObjectInputStream(serverInputStream);
+        } catch (IOException ex) {
+            System.err.println("Unable to establish input connection with server.");
+            return;
+        }
+
         Object obj = null;
 
         while (!currentThread().isInterrupted()) {
@@ -69,6 +77,8 @@ public final class ServerInputManager extends Thread {
                 System.err.println("Got invalid packet from server.");
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (NullPointerException expected) {
+                // Unable to establish input connection
             }
         }
     }
