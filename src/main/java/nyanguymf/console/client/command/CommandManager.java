@@ -23,10 +23,7 @@
  */
 package nyanguymf.console.client.command;
 
-import static java.util.stream.Collectors.toList;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /** @author NyanGuyMF - Vasiliy Bely */
@@ -65,15 +62,13 @@ public final class CommandManager {
         if (isExecuted)
             return isExecuted;
 
-        List<String> commands = this.commands.values().parallelStream()
-                .map(command -> command.getName())
-                .collect(toList());
-
-        for (String cmd : commands) {
-            if (cmd.equals(name)) {
-                this.commands.get(cmd.toLowerCase()).execute(name, args);
-                isExecuted = true;
-                break; // command executed, now there are no reason to continue.
+        for (Command cmd : commands.values()) {
+            for (String alias : cmd.getAliases()) {
+                if (alias.equals(name)) {
+                    cmd.execute(alias, args);
+                    isExecuted = true;
+                    break;
+                }
             }
         }
 
