@@ -47,7 +47,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>me.nyanguymf.console.client.ConsoleClient</mainClass>
+                            <mainClass>nyanguymf.console.client.ConsoleClient</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -120,7 +120,9 @@ public class ConsoleClient {
     }
 
     private void onDisable() {
-        connectionManager.close();
+        try {
+            connectionManager.close();
+        } catch (NullPointerException ignore) {}
         System.out.println("Console client was disabled.");
     }
 }
