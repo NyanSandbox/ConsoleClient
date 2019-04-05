@@ -31,6 +31,7 @@ public final class LoginCommand extends Command implements CommandExecutor {
 
     public LoginCommand(final CredentialsCache cache) {
         super("login");
+        super.setExecutor(this);
 
         this.cache = cache;
     }

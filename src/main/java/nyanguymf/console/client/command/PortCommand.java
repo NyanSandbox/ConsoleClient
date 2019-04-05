@@ -33,6 +33,7 @@ public final class PortCommand extends Command implements CommandExecutor {
 
     public PortCommand(final CredentialsCache cache) {
         super("port");
+        super.setExecutor(this);
 
         this.cache = cache;
     }

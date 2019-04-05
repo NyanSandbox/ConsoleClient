@@ -31,6 +31,9 @@ public final class HostCommand extends Command implements CommandExecutor {
 
     public HostCommand(final CredentialsCache cache) {
         super("host");
+        super.setExecutor(this);
+
+        this.cache = cache;
     }
 
     @Override

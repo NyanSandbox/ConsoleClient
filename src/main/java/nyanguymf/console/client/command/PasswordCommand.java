@@ -35,6 +35,7 @@ public final class PasswordCommand extends Command implements CommandExecutor {
 
     public PasswordCommand(final CredentialsCache cache) {
         super("password", new HashSet<>(asList("pass")));
+        super.setExecutor(this);
 
         this.cache = cache;
     }

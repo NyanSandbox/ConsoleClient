@@ -47,7 +47,7 @@ public final class CredentialsCache {
     public CredentialsCache initialize() {
         ClientInputManager.setIgnoring(true);
 
-        System.out.print("Enter login%s: ");
+        System.out.print("Enter login: ");
         final String newLogin = sc.nextLine();
         login = newLogin.equals("") ? login : newLogin;
 
@@ -92,11 +92,11 @@ public final class CredentialsCache {
             } else if (CredentialsCache.tries >= 25) {
                 System.out.println("Ok, just let me type it for you: ");
                 try {
-                    sleep(35L);
+                    sleep(150L);
                     System.out.print(4);
-                    sleep(25L);
+                    sleep(126L);
                     System.out.print(4);
-                    sleep(15L);
+                    sleep(100L);
                     System.out.println("3...");
                 } catch (InterruptedException ignore) {}
                 return 443;
@@ -106,7 +106,7 @@ public final class CredentialsCache {
             System.out.print(
                 "The port parameter is outside the specified range "
                 + "of valid port values, which is between 0 and 65535,"
-                + " inclusive. Enter again: "
+                + " inclusive.\nEnter again: "
             );
             ++CredentialsCache.tries;
             return parsePortRecursively();
@@ -162,7 +162,7 @@ public final class CredentialsCache {
     }
 
     /** Sets port */
-    public void setPort(int port) {
+    public void setPort(final int port) {
         this.port = port;
     }
 }
