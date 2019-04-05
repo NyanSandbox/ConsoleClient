@@ -23,7 +23,7 @@
  */
 package nyanguymf.console.client.io;
 
-import me.nyanguymf.console.net.Packet;
+import nyanguymf.console.common.net.Packet;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 @FunctionalInterface

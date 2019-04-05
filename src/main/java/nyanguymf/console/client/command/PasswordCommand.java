@@ -28,9 +28,11 @@ import static java.util.Arrays.asList;
 import java.util.HashSet;
 
 import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.common.command.ConsoleCommand;
+import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class PasswordCommand extends Command implements CommandExecutor {
+public final class PasswordCommand extends ConsoleCommand implements ConsoleCommandExecutor {
     private CredentialsCache cache;
 
     public PasswordCommand(final CredentialsCache cache) {
@@ -41,7 +43,7 @@ public final class PasswordCommand extends Command implements CommandExecutor {
     }
 
     @Override
-    public void execute(final Command cmd, final String alias, final String[] args) {
+    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
             System.out.println("User /pass «new password», please");
             return;

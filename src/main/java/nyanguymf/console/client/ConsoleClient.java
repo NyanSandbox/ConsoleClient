@@ -1,3 +1,26 @@
+/**
+ * This file is the part of Console Client program.
+ *
+ * Copyright (c) 2019 Vasily
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package nyanguymf.console.client;
 
 import static java.util.Arrays.copyOfRange;
@@ -5,7 +28,6 @@ import static java.util.Arrays.copyOfRange;
 import java.util.Scanner;
 
 import nyanguymf.console.client.cache.CredentialsCache;
-import nyanguymf.console.client.command.CommandManager;
 import nyanguymf.console.client.command.HelpCommand;
 import nyanguymf.console.client.command.HostCommand;
 import nyanguymf.console.client.command.LoginCommand;
@@ -15,6 +37,7 @@ import nyanguymf.console.client.command.ReconnectCommand;
 import nyanguymf.console.client.command.StopCommand;
 import nyanguymf.console.client.io.ClientInputManager;
 import nyanguymf.console.client.net.ConnectionManager;
+import nyanguymf.console.common.command.CommandManager;
 
 public class ConsoleClient {
     public static final short SUCCESS = 0;

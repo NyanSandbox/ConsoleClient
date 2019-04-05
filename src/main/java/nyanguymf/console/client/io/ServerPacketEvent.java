@@ -23,9 +23,9 @@
  */
 package nyanguymf.console.client.io;
 
-import me.nyanguymf.console.net.Packet;
-import nyanguymf.console.client.event.AbstractEvent;
-import nyanguymf.console.client.event.DefaultHander;
+import nyanguymf.console.common.event.AbstractEvent;
+import nyanguymf.console.common.event.DefaultHander;
+import nyanguymf.console.common.net.Packet;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ServerPacketEvent extends AbstractEvent<ServerPacketEvent> {

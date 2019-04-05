@@ -25,8 +25,11 @@ package nyanguymf.console.client.command;
 
 import static java.lang.System.out;
 
+import nyanguymf.console.common.command.ConsoleCommand;
+import nyanguymf.console.common.command.ConsoleCommandExecutor;
+
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class HelpCommand extends Command implements CommandExecutor {
+public final class HelpCommand extends ConsoleCommand implements ConsoleCommandExecutor {
 
     public HelpCommand() {
         super("help");
@@ -34,7 +37,7 @@ public final class HelpCommand extends Command implements CommandExecutor {
     }
 
     @Override
-    public void execute(final Command cmd, final String alias, final String[] args) {
+    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         out.println("/exit - to exit the program");
         out.println("/stop - will stop the server");
         out.println("/reconnect - will try connecting again");

@@ -1,4 +1,4 @@
-package me.nyanguymf.console.net;
+package nyanguymf.console.common.net;
 
 import java.io.Serializable;
 

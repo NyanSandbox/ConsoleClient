@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package me.nyanguymf.console.net;
+package nyanguymf.console.common.net;
 
 import java.io.Serializable;
 

@@ -21,24 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.command;
+package nyanguymf.console.common.command;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-abstract class Command {
+public abstract class ConsoleCommand {
     private String name;
     private Set<String> aliases;
-    private CommandExecutor executor;
+    private ConsoleCommandExecutor executor;
 
-    public Command(final String name) {
+    public ConsoleCommand(final String name) {
         this.name = name;
         aliases = new HashSet<>();
     }
 
-    public Command(final String name, final Set<String> aliases) {
+    public ConsoleCommand(final String name, final Set<String> aliases) {
         this(name);
         this.aliases = aliases;
     }
@@ -58,7 +58,7 @@ abstract class Command {
     }
 
     /** Sets executor */
-    public void setExecutor(final CommandExecutor executor) {
+    public void setExecutor(final ConsoleCommandExecutor executor) {
         this.executor = executor;
     }
 
@@ -85,10 +85,10 @@ abstract class Command {
         if (obj == null)
             return false;
 
-        if (!(obj instanceof Command))
+        if (!(obj instanceof ConsoleCommand))
             return false;
 
-        Command other = (Command) obj;
+        ConsoleCommand other = (ConsoleCommand) obj;
         return Objects.equals(name, other.name);
     }
 }

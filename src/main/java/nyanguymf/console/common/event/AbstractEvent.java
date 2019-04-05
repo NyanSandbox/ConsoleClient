@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.event;
+package nyanguymf.console.common.event;
 
 import java.util.HashSet;
 import java.util.Set;

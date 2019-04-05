@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.command;
+package nyanguymf.console.common.command;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class CommandManager {
-    private Map<String, Command> commands;
+    private Map<String, ConsoleCommand> commands;
 
     public CommandManager() {
         commands = new HashMap<>();
@@ -62,7 +62,7 @@ public final class CommandManager {
         if (isExecuted)
             return isExecuted;
 
-        for (Command cmd : commands.values()) {
+        for (ConsoleCommand cmd : commands.values()) {
             for (String alias : cmd.getAliases()) {
                 if (alias.equals(name)) {
                     cmd.execute(alias, args);
@@ -81,7 +81,7 @@ public final class CommandManager {
      * @param   cmd     Command to register for client.
      * @return Old command with the same name.
      */
-    public Command registerCommand(final Command cmd) {
+    public ConsoleCommand registerCommand(final ConsoleCommand cmd) {
         return commands.put(cmd.getName().toLowerCase(), cmd);
     }
 }

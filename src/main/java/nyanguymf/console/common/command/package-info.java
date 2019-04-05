@@ -21,10 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.command;
-
-/** @author NyanGuyMF - Vasiliy Bely */
-@FunctionalInterface
-public interface CommandExecutor {
-    void execute(final Command cmd, final String alias, final String[] args);
-}
+/**
+ * Provides basic commands management.
+ *
+ * @author NyanGuyMF - Vasiliy Bely
+ */
+package nyanguymf.console.common.command;

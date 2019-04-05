@@ -24,9 +24,11 @@
 package nyanguymf.console.client.command;
 
 import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.common.command.ConsoleCommand;
+import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class LoginCommand extends Command implements CommandExecutor {
+public final class LoginCommand extends ConsoleCommand implements ConsoleCommandExecutor {
     private CredentialsCache cache;
 
     public LoginCommand(final CredentialsCache cache) {
@@ -37,7 +39,7 @@ public final class LoginCommand extends Command implements CommandExecutor {
     }
 
     @Override
-    public void execute(final Command cmd, final String alias, final String[] args) {
+    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
             System.out.println("User /login «new login», please");
             return;

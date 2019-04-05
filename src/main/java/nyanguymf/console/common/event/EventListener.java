@@ -21,16 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.event;
+package nyanguymf.console.common.event;
 
 /**
- * Provides default handling for specific {@link Event}
- * implementation.
+ * Describes relationship between events and their
+ * handlers/listeners.
  *
  * @author NyanGuyMF - Vasiliy Bely
  */
-@FunctionalInterface
-public interface DefaultHander<Impl extends Event<?>> {
-    /** Runs after all event listeners and handles the event by default. */
-    void handle(Impl event);
+public interface EventListener<ListenedEvent extends Event<?>> {
+    /**
+     * Executes when event has been changed.
+     *
+     * @param   even    Listened event.
+     */
+    void onUpdate(ListenedEvent even);
 }

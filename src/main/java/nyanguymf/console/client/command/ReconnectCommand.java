@@ -29,9 +29,11 @@ import java.util.HashSet;
 
 import nyanguymf.console.client.cache.CredentialsCache;
 import nyanguymf.console.client.net.ConnectionManager;
+import nyanguymf.console.common.command.ConsoleCommand;
+import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class ReconnectCommand extends Command implements CommandExecutor {
+public final class ReconnectCommand extends ConsoleCommand implements ConsoleCommandExecutor {
     private CredentialsCache cache;
     private ConnectionManager conn;
 
@@ -44,7 +46,7 @@ public final class ReconnectCommand extends Command implements CommandExecutor {
     }
 
     @Override
-    public void execute(final Command cmd, final String alias, final String[] args) {
+    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         try {
             conn.connect(cache);
         } catch (Exception ex) {

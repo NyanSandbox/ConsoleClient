@@ -21,25 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.io;
-
-import nyanguymf.console.common.event.AbstractEvent;
+package nyanguymf.console.common.command;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class ClientInputEvent extends AbstractEvent<ClientInputEvent> {
-    private String input;
-
-    public ClientInputEvent() {
-        super.setImpl(this);
-    }
-
-    /** @return the input */
-    public String getInput() {
-        return input;
-    }
-
-    /** Sets input */
-    protected void setInput(final String input) {
-        this.input = input;
-    }
+@FunctionalInterface
+public interface ConsoleCommandExecutor {
+    void execute(final ConsoleCommand cmd, final String alias, final String[] args);
 }

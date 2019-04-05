@@ -24,7 +24,7 @@
 package nyanguymf.console.client.io;
 
 import nyanguymf.console.client.cache.CredentialsCache;
-import nyanguymf.console.client.event.DefaultHander;
+import nyanguymf.console.common.event.DefaultHander;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 final class ServerPacketHandler implements DefaultHander<ServerPacketEvent> {

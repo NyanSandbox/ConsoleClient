@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-import me.nyanguymf.console.net.Packet;
+import nyanguymf.console.common.net.Packet;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ServerOutputManager implements PacketRequestManager {

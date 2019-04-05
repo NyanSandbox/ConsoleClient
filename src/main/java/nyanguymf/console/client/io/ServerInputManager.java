@@ -28,8 +28,8 @@ import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 
-import me.nyanguymf.console.net.Packet;
 import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.common.net.Packet;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ServerInputManager extends Thread {

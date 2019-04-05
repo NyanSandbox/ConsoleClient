@@ -26,9 +26,11 @@ package nyanguymf.console.client.command;
 import static java.lang.Integer.parseInt;
 
 import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.common.command.ConsoleCommand;
+import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class PortCommand extends Command implements CommandExecutor {
+public final class PortCommand extends ConsoleCommand implements ConsoleCommandExecutor {
     private CredentialsCache cache;
 
     public PortCommand(final CredentialsCache cache) {
@@ -39,7 +41,7 @@ public final class PortCommand extends Command implements CommandExecutor {
     }
 
     @Override
-    public void execute(final Command cmd, final String alias, final String[] args) {
+    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
             System.out.println("User /port «new port», please");
             return;
