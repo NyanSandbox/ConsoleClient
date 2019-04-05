@@ -25,12 +25,14 @@ package nyanguymf.console.client.net;
 
 import static nyanguymf.console.client.net.ConnectionStatus.CONNECTION_REFUSED;
 import static nyanguymf.console.client.net.ConnectionStatus.INVALID_PORT;
+import static nyanguymf.console.client.net.ConnectionStatus.SSL_ERROR;
 import static nyanguymf.console.client.net.ConnectionStatus.UNKNOWN_HOST;
 
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 
+import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -84,6 +86,8 @@ public final class ConnectionManager {
             status = UNKNOWN_HOST;
         } catch (ConnectException ex) {
             status = CONNECTION_REFUSED;
+        } catch (SSLException ex) {
+            status = SSL_ERROR;
         }
 
         return this;

@@ -59,6 +59,9 @@ public class ConsoleClient {
         case CONNECTION_REFUSED:
             System.out.println("Connection refused.");
             break;
+        case SSL_ERROR:
+            System.out.println("Unable to establish SSL connection with server.");
+            break;
         }
 
         commandManager = new CommandManager();

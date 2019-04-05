@@ -25,5 +25,6 @@ package nyanguymf.console.client.net;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public enum ConnectionStatus {
-    CONNECTED, UNKNOWN_HOST, INVALID_PORT, CONNECTION_REFUSED;
+    CONNECTED, UNKNOWN_HOST, INVALID_PORT,
+    CONNECTION_REFUSED, SSL_ERROR;
 }
