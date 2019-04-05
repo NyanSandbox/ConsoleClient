@@ -23,7 +23,9 @@
  */
 package nyanguymf.console.client.command;
 
-import nyanguymf.console.client.io.ServerOutputManager;
+import nyanguymf.console.client.User;
+import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.client.net.ConnectionManager;
 import nyanguymf.console.common.command.ConsoleCommand;
 import nyanguymf.console.common.command.ConsoleCommandExecutor;
 import nyanguymf.console.common.net.Packet;
@@ -31,13 +33,15 @@ import nyanguymf.console.common.net.PacketType;
 
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class StopCommand extends ConsoleCommand implements ConsoleCommandExecutor {
-    private ServerOutputManager out;
+    private ConnectionManager conn;
+    private CredentialsCache cache;
 
-    public StopCommand(final ServerOutputManager out) {
+    public StopCommand(final ConnectionManager conn, final CredentialsCache cache) {
         super("stop");
         super.setExecutor(this);
 
-        this.out = out;
+        this.conn  = conn;
+        this.cache = cache;
     }
 
     @Override
@@ -45,10 +49,13 @@ public final class StopCommand extends ConsoleCommand implements ConsoleCommandE
         System.out.println("stoping server...");
 
         Packet packet = new Packet.PacketBuilder()
-                .body("Bye c:")
+                .body(new User(
+                    cache.getLogin(),
+                    cache.getPasswordHash()
+                ).toJson())
                 .type(PacketType.STOP)
                 .build();
 
-        out.sendPacket(packet);
+        conn.getOut().sendPacket(packet);
     }
 }

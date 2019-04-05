@@ -50,12 +50,14 @@ public final class HostCommand extends ConsoleCommand implements ConsoleCommandE
         // split host:port
         String[] hostPort = args[0].split(":");
         String newHost = hostPort[0];
+        int newPort;
 
         if (hostPort.length == 1) {
             System.out.println("Warning: you've entered only host.");
             System.out.println("Port value will not change.");
+            newPort = cache.getPort();
         } else {
-            setNewPort(hostPort[1]);
+            newPort = setNewPort(hostPort[1]);
         }
 
         if (newHost.equals(cache.getHost())) {
@@ -64,19 +66,19 @@ public final class HostCommand extends ConsoleCommand implements ConsoleCommandE
         }
 
         cache.setHost(newHost);
-        System.out.printf("New host «%s» has been successfuly set.\n", newHost);
+        System.out.printf("New host «%s:%d» has been successfuly set.\n", newHost, newPort);
     }
 
-    private void setNewPort(final String port) {
-        int newPort = -1;
+    private int setNewPort(final String port) {
+        int newPort = cache.getPort();
 
         try {
             newPort = parseInt(port);
         } catch (NumberFormatException ex) {
             System.err.println("You should enter the number between 0 and 65535 for port!");
-            return;
         }
 
         cache.setPort(newPort);
+        return newPort;
     }
 }

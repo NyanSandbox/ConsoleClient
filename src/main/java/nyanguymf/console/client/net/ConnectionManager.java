@@ -75,8 +75,12 @@ public final class ConnectionManager {
         in.close();
         try {
             socket.close();
+            System.out.println("Socket was closed.");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(
+                "Socket were already closed or error ocured: "
+                + ex.getLocalizedMessage()
+            );
         }
     }
 

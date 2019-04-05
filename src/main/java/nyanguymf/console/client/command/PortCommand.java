@@ -62,6 +62,6 @@ public final class PortCommand extends ConsoleCommand implements ConsoleCommandE
         }
 
         cache.setPort(newPort);
-        System.out.printf("New port has been successfuly set.\n", newPort);
+        System.out.printf("New port «%d» has been successfuly set.\n", newPort);
     }
 }

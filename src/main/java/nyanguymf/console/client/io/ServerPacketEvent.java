@@ -34,6 +34,7 @@ public final class ServerPacketEvent extends AbstractEvent<ServerPacketEvent> {
     public ServerPacketEvent(final DefaultHander<ServerPacketEvent> defaultHander) {
         super();
         super.setImpl(this);
+        super.setDefaultHander(defaultHander);
     }
 
     public Packet getPacket() {

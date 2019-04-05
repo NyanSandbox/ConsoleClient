@@ -53,7 +53,13 @@ public final class ServerOutputManager implements PacketRequestManager {
         try {
             out.close();
         } catch (IOException ex) {
+            System.out.println(
+                "Output manager was closed or error occured: "
+                + ex.getLocalizedMessage()
+            );
             ex.printStackTrace();
+            return;
         } catch (NullPointerException ignore) {}
+        System.out.println("Output manager was closed.");
     }
 }

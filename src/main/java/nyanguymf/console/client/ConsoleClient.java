@@ -28,6 +28,7 @@ import static java.util.Arrays.copyOfRange;
 import java.util.Scanner;
 
 import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.client.command.ExitCommand;
 import nyanguymf.console.client.command.HelpCommand;
 import nyanguymf.console.client.command.HostCommand;
 import nyanguymf.console.client.command.LoginCommand;
@@ -55,7 +56,8 @@ public class ConsoleClient {
 
     public static void exit(final short status) {
         ConsoleClient.instance.onDisable();
-        exit(status);
+        System.out.println("Bye-bye)");
+        System.exit(status);
     }
 
     private ConsoleClient() {
@@ -82,18 +84,18 @@ public class ConsoleClient {
         case CONNECTION_REFUSED:
             System.out.println("Connection refused.");
             break;
-        case SSL_ERROR:
-            System.out.println("Unable to establish SSL connection with server.");
-            break;
         }
 
         commandManager = new CommandManager();
-        commandManager.registerCommand(new StopCommand(connectionManager.getOut()));
         commandManager.registerCommand(new HelpCommand());
         commandManager.registerCommand(new LoginCommand(credentialsCache));
         commandManager.registerCommand(new PasswordCommand(credentialsCache));
         commandManager.registerCommand(new HostCommand(credentialsCache));
         commandManager.registerCommand(new PortCommand(credentialsCache));
+        commandManager.registerCommand(new ExitCommand());
+        commandManager.registerCommand(
+            new StopCommand(connectionManager, credentialsCache)
+        );
         commandManager.registerCommand(new ReconnectCommand(
                 credentialsCache, connectionManager
         ));
@@ -119,5 +121,6 @@ public class ConsoleClient {
 
     private void onDisable() {
         connectionManager.close();
+        System.out.println("Console client was disabled.");
     }
 }

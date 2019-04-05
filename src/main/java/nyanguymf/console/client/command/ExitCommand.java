@@ -23,39 +23,19 @@
  */
 package nyanguymf.console.client.command;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
-import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.client.ConsoleClient;
 import nyanguymf.console.common.command.ConsoleCommand;
 import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class LoginCommand extends ConsoleCommand implements ConsoleCommandExecutor {
-    private CredentialsCache cache;
-
-    public LoginCommand(final CredentialsCache cache) {
-        super("login", new HashSet<>(Arrays.asList("l")));
+public final class ExitCommand extends ConsoleCommand implements ConsoleCommandExecutor {
+    public ExitCommand() {
+        super("exit");
         super.setExecutor(this);
-
-        this.cache = cache;
     }
 
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
-        if (args.length == 0) {
-            System.out.println("User /login «new login», please");
-            return;
-        }
-
-        String newLogin = args[0];
-
-        if (newLogin.equals(cache.getLogin())) {
-            System.out.println("You've entered old login.");
-            return;
-        }
-
-        cache.setLogin(newLogin);
-        System.out.printf("New login «%s» has been successfuly set.\n", newLogin);
+        ConsoleClient.exit(ConsoleClient.SUCCESS);
     }
 }

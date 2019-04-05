@@ -60,11 +60,11 @@ public class AbstractEvent<Impl extends AbstractEvent<?>> implements Event<Impl>
         return this;
     }
 
-    @Override public final void register(final EventListener<Impl> listener) {
+    @Override public void register(final EventListener<Impl> listener) {
         listeners.add(listener);
     }
 
-    @Override public final void run() {
+    @Override public void run() {
         for (EventListener<Impl> listener : listeners) {
             listener.onUpdate(impl);
         }

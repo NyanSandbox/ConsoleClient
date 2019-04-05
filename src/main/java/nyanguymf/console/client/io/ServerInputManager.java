@@ -23,10 +23,12 @@
  */
 package nyanguymf.console.client.io;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
+import java.net.SocketException;
 
 import nyanguymf.console.client.cache.CredentialsCache;
 import nyanguymf.console.common.net.Packet;
@@ -59,7 +61,15 @@ public final class ServerInputManager extends Thread {
 
         while (!currentThread().isInterrupted()) {
             try {
-                obj = in.readObject();
+                try {
+                    obj = in.readObject();
+                } catch (EOFException e) {
+                    System.out.println("Server connection was closed");
+                    break;
+                } catch (SocketException ex) {
+                    System.out.println("Server connection was closed");
+                    break;
+                }
 
                 if (!(obj instanceof Packet)) {
                     System.err.println("Got invalid packet from server.");
@@ -67,6 +77,7 @@ public final class ServerInputManager extends Thread {
                 }
 
                 Packet packet = (Packet) obj;
+
                 new Thread(
                     event.setPacket(packet),
                     "Handle server packet thread."
@@ -87,7 +98,13 @@ public final class ServerInputManager extends Thread {
         try {
             in.close();
         } catch (IOException ex) {
+            System.out.println(
+                "Server input was closed or error occured: "
+                + ex.getLocalizedMessage()
+            );
             ex.printStackTrace();
+            return;
         } catch (NullPointerException ignore) {}
+        System.out.println("Server input was closed.");
     }
 }
