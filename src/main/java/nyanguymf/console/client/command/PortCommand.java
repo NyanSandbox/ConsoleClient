@@ -43,7 +43,7 @@ public final class PortCommand extends ConsoleCommand implements ConsoleCommandE
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
-            System.out.println("User /port «new port», please");
+            System.out.println("Use !port «new port», please");
             return;
         }
 

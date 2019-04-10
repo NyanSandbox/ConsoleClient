@@ -45,7 +45,7 @@ public final class PasswordCommand extends ConsoleCommand implements ConsoleComm
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
-            System.out.println("User /pass «new password», please");
+            System.out.println("Use !pass «new password», please");
             return;
         }
 

@@ -42,9 +42,16 @@ final class ServerPacketHandler implements DefaultHander<ServerPacketEvent> {
         case INVALID_CREDENTIALS:
             credentialsCache.initialize();
             break;
+        case LOG_MESSAGE:
+            System.out.println(filterBukkitMessage(event.getPacket().getBody()));
+            break;
         default:
             System.out.println(event.getPacket());
             break;
         }
+    }
+
+    private String filterBukkitMessage(final String message) {
+        return message.replaceAll("(\u00a7.)", "");
     }
 }

@@ -23,7 +23,7 @@
  */
 package nyanguymf.console.client.command;
 
-import nyanguymf.console.client.User;
+import nyanguymf.console.client.AuthJson;
 import nyanguymf.console.client.cache.CredentialsCache;
 import nyanguymf.console.client.net.ConnectionManager;
 import nyanguymf.console.common.command.ConsoleCommand;
@@ -32,29 +32,50 @@ import nyanguymf.console.common.net.Packet;
 import nyanguymf.console.common.net.PacketType;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class StopCommand extends ConsoleCommand implements ConsoleCommandExecutor {
+public final class LogCommand extends ConsoleCommand implements ConsoleCommandExecutor {
     private ConnectionManager conn;
     private CredentialsCache cache;
 
-    public StopCommand(final ConnectionManager conn, final CredentialsCache cache) {
-        super("stop");
+    public LogCommand(final ConnectionManager conn, final CredentialsCache cache) {
+        super("log");
         super.setExecutor(this);
-
         this.conn  = conn;
         this.cache = cache;
     }
 
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
-        System.out.println("stoping server...");
+        if (args.length == 0) {
+            System.err.println("Not enough args! Please, use !log [enable|disable]");
+            return;
+        }
 
-        Packet packet = new Packet.PacketBuilder()
-                .body(new User(
+        Packet packet;
+
+        switch (args[0].toLowerCase()) {
+        case "enable":
+            packet = new Packet.PacketBuilder()
+                .body(new AuthJson(
                     cache.getLogin(),
                     cache.getPasswordHash()
                 ).toJson())
-                .type(PacketType.STOP)
+                .type(PacketType.LOG_ENABLE)
                 .build();
+            break;
+        case "disable":
+            packet = new Packet.PacketBuilder()
+                .body(new AuthJson(
+                    cache.getLogin(),
+                    cache.getPasswordHash()
+                ).toJson())
+                .type(PacketType.LOG_DISABLE)
+                .build();
+            break;
+
+        default:
+            System.err.printf("You've entered «%s», use «enable» or «disable».\n", args[0]);
+            return;
+        }
 
         conn.getOut().sendPacket(packet);
     }

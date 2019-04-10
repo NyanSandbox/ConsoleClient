@@ -23,15 +23,29 @@
  */
 package nyanguymf.console.common.command;
 
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import nyanguymf.console.client.JsonCommand;
+import nyanguymf.console.client.cache.CredentialsCache;
+import nyanguymf.console.client.io.ServerOutputManager;
+import nyanguymf.console.client.net.ConnectionManager;
+import nyanguymf.console.common.net.Packet;
+import nyanguymf.console.common.net.PacketType;
+
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class CommandManager {
+    private ConnectionManager conn;
+    private CredentialsCache cache;
     private Map<String, ConsoleCommand> commands;
 
-    public CommandManager() {
-        commands = new HashMap<>();
+    public CommandManager(final ConnectionManager conn, final CredentialsCache cache) {
+        this.conn  = conn;
+        this.cache = cache;
+        commands   = new HashMap<>();
     }
 
     /**
@@ -73,6 +87,31 @@ public final class CommandManager {
         }
 
         return isExecuted;
+    }
+
+    /**
+     * Executes remote command on server.
+     *
+     * @param   command     Command itself to execute
+     * @param   args        Arguments for command
+     */
+    public void executeRemoteCommand(final String command, final String[] args) {
+        ServerOutputManager out = conn.getOut();
+
+        Packet packet = new Packet.PacketBuilder()
+                .body(
+                    new JsonCommand(
+                        command,
+                        stream(args).parallel().collect(joining(" ")).trim(),
+                        cache.getLogin(),
+                        cache.getPasswordHash()
+                    ).toJson()
+                ).type(PacketType.REMOTE_COMMAND)
+                .build();
+
+        if (!out.sendPacket(packet)) {
+            System.err.println("Couldn't execute remote command.");
+        }
     }
 
     /**

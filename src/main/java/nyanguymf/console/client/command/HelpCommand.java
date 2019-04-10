@@ -23,8 +23,6 @@
  */
 package nyanguymf.console.client.command;
 
-import static java.lang.System.out;
-
 import nyanguymf.console.common.command.ConsoleCommand;
 import nyanguymf.console.common.command.ConsoleCommandExecutor;
 
@@ -38,11 +36,12 @@ public final class HelpCommand extends ConsoleCommand implements ConsoleCommandE
 
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
-        out.println("/exit - to exit the program");
-        out.println("/stop - will stop the server");
-        out.println("/reconnect - will try connecting again");
-        out.println("/login «new login» - will update current login");
-        out.println("/password «new password» - will update current password");
-        out.println("/host «hostname:port» - will update current host");
+        System.out.println("!exit - to exit the program");
+        System.out.println("!stop - will stop the server");
+        System.out.println("!reconnect - will try connecting again");
+        System.out.println("!login «new login» - will update current login");
+        System.out.println("!password «new password» - will update current password");
+        System.out.println("!host «hostname:port» - will update current host");
+        System.out.println("!log [enable|disable] - to set up logging system with server");
     }
 }

@@ -42,7 +42,10 @@ public final class ServerOutputManager implements PacketRequestManager {
             out.writeObject(packet);
             out.flush();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.printf(
+                "Couldn't send packet «%s»: %s\n",
+                packet, ex.getLocalizedMessage()
+            );
             return false;
         }
 
@@ -57,7 +60,6 @@ public final class ServerOutputManager implements PacketRequestManager {
                 "Output manager was closed or error occured: "
                 + ex.getLocalizedMessage()
             );
-            ex.printStackTrace();
             return;
         } catch (NullPointerException ignore) {}
         System.out.println("Output manager was closed.");

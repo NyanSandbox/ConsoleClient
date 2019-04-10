@@ -21,41 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.command;
+package nyanguymf.console.client.io;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import static java.util.Arrays.copyOfRange;
 
-import nyanguymf.console.client.cache.CredentialsCache;
-import nyanguymf.console.common.command.ConsoleCommand;
-import nyanguymf.console.common.command.ConsoleCommandExecutor;
+import nyanguymf.console.common.command.CommandManager;
+import nyanguymf.console.common.event.AbstractEvent;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class LoginCommand extends ConsoleCommand implements ConsoleCommandExecutor {
-    private CredentialsCache cache;
+public final class ServerCommandEvent extends AbstractEvent<ServerCommandEvent> {
+    private String command;
 
-    public LoginCommand(final CredentialsCache cache) {
-        super("login", new HashSet<>(Arrays.asList("l")));
-        super.setExecutor(this);
+    public ServerCommandEvent(final CommandManager commandManager) {
+        super.setImpl(this);
+        super.setDefaultHander(event -> {
+            String[] input = event.getCommand().split("\\s");
+            String   name  = input[0].replaceFirst("/", "");
+            String[] args  = input.length > 1
+                    ? copyOfRange(input, 1, input.length)
+                    : new String[0];
 
-        this.cache = cache;
+            commandManager.executeRemoteCommand(name, args);
+        });
     }
 
-    @Override
-    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
-        if (args.length == 0) {
-            System.out.println("Use !login «new login», please");
-            return;
-        }
+    /** @return the command */
+    public String getCommand() {
+        return command;
+    }
 
-        String newLogin = args[0];
-
-        if (newLogin.equals(cache.getLogin())) {
-            System.out.println("You've entered old login.");
-            return;
-        }
-
-        cache.setLogin(newLogin);
-        System.out.printf("New login «%s» has been successfuly set.\n", newLogin);
+    /** Sets command */
+    public void setCommand(final String command) {
+        this.command = command;
     }
 }

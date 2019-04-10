@@ -25,17 +25,22 @@ package nyanguymf.console.client.io;
 
 import java.util.Scanner;
 
+import nyanguymf.console.common.command.CommandManager;
+
 /** @author NyanGuyMF - Vasiliy Bely */
 public final class ClientInputManager extends Thread {
+    /* ignore when credentials cache updating */
     private static boolean isIgnoring = false;
-    private ClientInputEvent event;
+    private ClientCommandEvent clientCommandEvent;
+    private ServerCommandEvent serverCommandEvent;
     private Scanner in;
 
-    public ClientInputManager(final Scanner in) {
+    public ClientInputManager(final Scanner in, final CommandManager commandManager) {
         super("Client input thread.");
 
         this.in = in;
-        event = new ClientInputEvent();
+        clientCommandEvent = new ClientCommandEvent(commandManager);
+        serverCommandEvent = new ServerCommandEvent(commandManager);
     }
 
     @Override public void run() {
@@ -47,22 +52,31 @@ public final class ClientInputManager extends Thread {
                 continue;
             }
 
-            if (!command.startsWith("/")) {
+            if (command.startsWith("/")) {
+                // execute server command
+                serverCommandEvent.setCommand(command);
+                new Thread(
+                    serverCommandEvent,
+                    "Server command executor"
+                ).start();
+            } else if (command.startsWith("!")) {
+                // execute client command
+                clientCommandEvent.setCommand(command);
+                new Thread(
+                    clientCommandEvent,
+                    "Client command executor"
+                ).start();
+            } else {
                 System.out.println("Enter /help for more information.");
                 continue;
             }
 
-            event.setInput(command);
-            new Thread(
-                event,
-                "Client input handler"
-            ).start();
         }
     }
 
     /** @return the event */
-    public ClientInputEvent getEvent() {
-        return event;
+    public ClientCommandEvent getClientCommandEvent() {
+        return clientCommandEvent;
     }
 
     public void close() {

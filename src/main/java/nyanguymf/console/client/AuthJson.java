@@ -24,12 +24,12 @@
 package nyanguymf.console.client;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class User {
+public final class AuthJson {
     private String username;
 
     private String hashedPassword;
 
-    public User(final String username, final String hashedPassword) {
+    public AuthJson(final String username, final String hashedPassword) {
         this.username = username;
         this.hashedPassword = hashedPassword;
     }

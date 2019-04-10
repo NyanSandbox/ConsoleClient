@@ -21,41 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package nyanguymf.console.client.command;
-
-import java.util.Arrays;
-import java.util.HashSet;
-
-import nyanguymf.console.client.cache.CredentialsCache;
-import nyanguymf.console.common.command.ConsoleCommand;
-import nyanguymf.console.common.command.ConsoleCommandExecutor;
+package nyanguymf.console.client;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class LoginCommand extends ConsoleCommand implements ConsoleCommandExecutor {
-    private CredentialsCache cache;
+public final class JsonCommand {
+    private String command;
 
-    public LoginCommand(final CredentialsCache cache) {
-        super("login", new HashSet<>(Arrays.asList("l")));
-        super.setExecutor(this);
+    private String args;
 
-        this.cache = cache;
+    private String username;
+
+    private String hashedPassword;
+
+    public JsonCommand(
+        final String command, final String args,
+        final String username, final String hashedPassword
+    ) {
+        this.command        = command;
+        this.args           = args;
+        this.username       = username;
+        this.hashedPassword = hashedPassword;
     }
 
-    @Override
-    public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
-        if (args.length == 0) {
-            System.out.println("Use !login «new login», please");
-            return;
-        }
-
-        String newLogin = args[0];
-
-        if (newLogin.equals(cache.getLogin())) {
-            System.out.println("You've entered old login.");
-            return;
-        }
-
-        cache.setLogin(newLogin);
-        System.out.printf("New login «%s» has been successfuly set.\n", newLogin);
+    public String toJson() {
+        return "{\"username\" : \"" + username + "\","
+                + "\"hashedPassword\" : \"" + hashedPassword + "\","
+                + "\"command\" : \"" + command+ "\","
+                + "\"args\" : \"" + args + "\""
+                + "}";
     }
 }

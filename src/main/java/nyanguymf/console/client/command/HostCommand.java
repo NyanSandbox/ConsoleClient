@@ -43,7 +43,7 @@ public final class HostCommand extends ConsoleCommand implements ConsoleCommandE
     @Override
     public void execute(final ConsoleCommand cmd, final String alias, final String[] args) {
         if (args.length == 0) {
-            System.out.println("User /host «new host», please");
+            System.out.println("Use !host «new host», please");
             return;
         }
 

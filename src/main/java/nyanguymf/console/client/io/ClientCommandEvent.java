@@ -23,23 +23,35 @@
  */
 package nyanguymf.console.client.io;
 
+import static java.util.Arrays.copyOfRange;
+
+import nyanguymf.console.common.command.CommandManager;
 import nyanguymf.console.common.event.AbstractEvent;
 
 /** @author NyanGuyMF - Vasiliy Bely */
-public final class ClientInputEvent extends AbstractEvent<ClientInputEvent> {
-    private String input;
+public final class ClientCommandEvent extends AbstractEvent<ClientCommandEvent> {
+    private String command;
 
-    public ClientInputEvent() {
+    public ClientCommandEvent(final CommandManager commandManager) {
         super.setImpl(this);
+        super.setDefaultHander(event -> {
+            String[] input = event.getCommand().split("\\s");
+            String   name  = input[0].replaceFirst("!", "");
+            String[] args  = input.length > 1
+                    ? copyOfRange(input, 1, input.length)
+                    : new String[0];
+
+            commandManager.executeCommand(name, args);
+        });
     }
 
     /** @return the input */
-    public String getInput() {
-        return input;
+    public String getCommand() {
+        return command;
     }
 
     /** Sets input */
-    protected void setInput(final String input) {
-        this.input = input;
+    protected void setCommand(final String input) {
+        command = input;
     }
 }

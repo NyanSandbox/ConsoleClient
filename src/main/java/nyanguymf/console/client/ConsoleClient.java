@@ -23,19 +23,17 @@
  */
 package nyanguymf.console.client;
 
-import static java.util.Arrays.copyOfRange;
-
 import java.util.Scanner;
 
 import nyanguymf.console.client.cache.CredentialsCache;
 import nyanguymf.console.client.command.ExitCommand;
 import nyanguymf.console.client.command.HelpCommand;
 import nyanguymf.console.client.command.HostCommand;
+import nyanguymf.console.client.command.LogCommand;
 import nyanguymf.console.client.command.LoginCommand;
 import nyanguymf.console.client.command.PasswordCommand;
 import nyanguymf.console.client.command.PortCommand;
 import nyanguymf.console.client.command.ReconnectCommand;
-import nyanguymf.console.client.command.StopCommand;
 import nyanguymf.console.client.io.ClientInputManager;
 import nyanguymf.console.client.net.ConnectionManager;
 import nyanguymf.console.common.command.CommandManager;
@@ -86,30 +84,21 @@ public class ConsoleClient {
             break;
         }
 
-        commandManager = new CommandManager();
+        commandManager = new CommandManager(connectionManager, credentialsCache);
         commandManager.registerCommand(new HelpCommand());
         commandManager.registerCommand(new LoginCommand(credentialsCache));
         commandManager.registerCommand(new PasswordCommand(credentialsCache));
         commandManager.registerCommand(new HostCommand(credentialsCache));
         commandManager.registerCommand(new PortCommand(credentialsCache));
         commandManager.registerCommand(new ExitCommand());
-        commandManager.registerCommand(
-            new StopCommand(connectionManager, credentialsCache)
-        );
+        commandManager.registerCommand(new LogCommand(
+                connectionManager, credentialsCache
+        ));
         commandManager.registerCommand(new ReconnectCommand(
                 credentialsCache, connectionManager
         ));
 
-        clientInput = new ClientInputManager(sc);
-        clientInput.getEvent().register((event) -> {
-            String[] input = event.getInput().split("\\s");
-            String   name  = input[0].replaceFirst("/", "");
-            String[] args  = input.length > 1
-                    ? copyOfRange(input, 1, input.length)
-                    : new String[0];
-
-            commandManager.executeCommand(name, args);
-        });
+        clientInput = new ClientInputManager(sc, commandManager);
 
         clientInput.start();
         System.out.println("Type /help for more info.");
